@@ -1,0 +1,5 @@
+Comparisons between protein sequences are in file 'output.fa'.
+
+Summary: When comparing sequences between human and mouse, the score is positive and high and the percentage identify is near 90%. However, when comparing sequences of human, mouse to a random one, the scores are negative and the percentages identify are small. Additionally, these scores and percentages identify are numerically similar.
+
+Interpretation: Both human and mouse are mammals, and they have close biological relationship. Hence, the sequences of the same protein are highly similar, which also results in similar scores and percentages when compared to one random sequence.

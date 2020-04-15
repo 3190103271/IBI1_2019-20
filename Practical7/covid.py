@@ -20,7 +20,7 @@ print(covid_data.iloc[:,0:15:3])
 my_location=[]
 for n in range (0,7996):
     location=covid_data.loc[n,"location"]
-    my_location.append(location=="Afghanistan")
+    my_location.append(location=="Afghanistan")#get the Boolean
     
 x=covid_data.loc[my_location,"total_cases"]
 
@@ -35,7 +35,7 @@ for n in range (0,7996):
     
     
 nc=covid_data.loc[world,"new_cases"]
-d=covid_data.loc[world,"date"]
+d=covid_data.loc[world,"date"]#get date
 nd=covid_data.loc[world,"new_deaths"]
 
 print(np.mean(nc))
@@ -52,7 +52,7 @@ plt.xticks(d.iloc[0:len(d):4],rotation=-90)
 plt.ylabel('number')
 plt.xlabel('date')
 plt.title('new cases and new deaths worldwide')
-plt.show()
+plt.show()#show the first plot or it will be placed
 
 
 
