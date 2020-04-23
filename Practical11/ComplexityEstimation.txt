@@ -1,0 +1,9 @@
+The coplexity of recursion should be n-1.
+To choose 2 from n cards has n*(n-1)/2 ways.
+Each time the program enter into five recursions, a+b, a-b (or b-a), a*b, a/b, b/a, with n-1 cards.
+
+Times[n]=(Time[n-1]*5+5)*(n*(n-1)/2)
+
+Times[n]=Times[n-1]*n^2
+Times[n]=1^2*2^2*3^2*...*n^2=n!^2
+O(n!^2)
