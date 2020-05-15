@@ -1,65 +1,55 @@
 
-#import neccessary libraries
+# import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
 
-#define basic variables
+
+# set varibles for susceptible, infected, recovered
 N=10000
-suscept=9999
-infect=1
-recover=0
+S=9999
+I=1
+R=0
+Sn=[S]
+In=[I]
+Rn=[R]
+time=[0]
 beta=0.3
 gamma=0.05
-day=0
 
-#define a class for record
-class timecourse:
-    suscept=[0 for i in range(1001)]
-    infect=[0 for i in range(1001)]
-    recover=[0 for i in range(1001)]
-    def __init__(self,suscept,infect,recover,day):
-        self.suscept[day]=suscept
-        self.infect[day]=infect
-        self.recover[day]=recover
-    def timepoint(self,suscept,infect,recover,day):
-        self.suscept[day]=suscept
-        self.infect[day]=infect
-        self.recover[day]=recover
-time=timecourse(9999,1,0,0)
 
-#random choice
-for day in range(1,1001):
-    si=np.random.choice(range(2),suscept,p=[1-beta*infect/N,beta*infect/N])
-    ir=np.random.choice(range(2),infect,p=[1-gamma,gamma])
+
+# repeat 1000 times
+for i in range(0,1000):
+    # randomly find the newly infected people with the probability beta*I/N, 1 means infected, 0 means susceptible
+    ni=np.random.choice(range(0,2),S,p=[1-beta*I/N,beta*I/N])
+    # randomly find the newly recovered people with the probability gamma, 2 means recovered
+    nr=np.random.choice(range(1,3),I,p=[1-gamma,gamma])
+    # count the number of newly infected people
+    nin=sum(ni==1)
+    # count the number of newly recovered people
+    nrn=sum(nr==2)
+    # the number of susceptible people change to the original number minus the number of newly infected people
+    S-=nin
+    Sn.append(S)
+    # the number of infected people change to the original number plus the number of newly infected people and minus the number of newly recovered people
+    I=I+nin-nrn
+    In.append(I)
+    # the numeber of recovered people change to the original number plus the numebr of newly recovered people
+    R+=nrn
+    Rn.append(R)
+    # record the time
+    time.append(i+1)
     
-    #record
-    for i in si:
-        if i==1:
-            suscept-=1
-            infect+=1
-    for i in ir:
-        if i==1:
-            infect-=1
-            recover+=1
-    time.timepoint(suscept,infect,recover,day)
+    
+    
 
-#draw figure
-x=[]
-ys=[]
-yi=[]
-yr=[]
-for i in range(1001):
-    x.append(i)
-    ys.append(time.suscept[i])
-    yi.append(time.infect[i])
-    yr.append(time.recover[i])
+# make a plot for the number of susceptible, infected, and recovered people
 plt.figure(figsize=(6,4),dpi=150)
-plt.plot(x,ys,linewidth=2,label='susceptiable')
-plt.plot(x,yi,linewidth=2,label='infected')
-plt.plot(x,yr,linewidth=2,label='recovered')
-plt.title('SIR model',fontsize=20)
-plt.xlabel('time',fontsize=12)
-plt.ylabel('number of people',fontsize=12)
-plt.tick_params(axis='both',labelsize=10)
-plt.legend(loc='upper right')
-plt.savefig(r'D:\figure.png',type='png')
+plt.plot(time,Sn,'b',marker = ',',label='Susceptible')
+plt.plot(time,In,'r',marker=',',label='Infected')
+plt.plot(time,Rn,'g',marker=',',label='Recovered')
+plt.title('SIR model')
+plt.xlabel('time')
+plt.ylabel('number of people')
+plt.legend()
+plt.savefig('SIR model',type='png')

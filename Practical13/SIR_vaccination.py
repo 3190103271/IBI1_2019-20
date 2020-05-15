@@ -1,70 +1,75 @@
 
-#import neccessary libraries
+# import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
+from matplotlib import cm
 
-#define basic variables
+
+# set varibles for susceptible, infected, recovered, and a list for vaccinatied
 N=10000
+S=9999
+V=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+I=1
+R=0
+In=[]
+time=[]
+dic={}
 beta=0.3
 gamma=0.05
-day=0
 
-#define a class for record
-class timecourse:
-    suscept=[0 for i in range(1001)]
-    infect=[0 for i in range(1001)]
-    recover=[0 for i in range(1001)]
-    def __init__(self,suscept,infect,recover,day):
-        self.suscept[day]=suscept
-        self.infect[day]=infect
-        self.recover[day]=recover
-    def timepoint(self,suscept,infect,recover,day):
-        self.suscept[day]=suscept
-        self.infect[day]=infect
-        self.recover[day]=recover
-time=timecourse(9999,1,0,0)
 
-#create plot
-plt.figure(figsize=(6,4),dpi=150)
 
-#try different vaccination rates
-for percentage in range(0,11):
-    
-    #initialize values
-    infect=1
-    recover=0
-    suscept=int((10000-infect)*(1-percentage*0.1))
-    
-    #randomize
-    for day in range(1,1001):
-        si=np.random.choice(range(2),suscept,p=[1-beta*infect/N,beta*infect/N])
-        ir=np.random.choice(range(2),infect,p=[1-gamma,gamma])
+for i in V:
+    In.clear()
+    I=1
+    In.append(I)
+    S=9999
+    S=int(S-N*i)
+    time.clear()
+    time=[0]
+    # make sure the 
+    if S>0:
+        # repeat 1000 times
+        for j in range(0,1000):
+            # randomly find newly infected people with the probability beta*I/N, 1 means infected, 0 means susceptible
+            ni=np.random.choice(range(0,2),S,p=[1-beta*I/N,beta*I/N])
+            # randomly find newly recovered people with the probability gamma, 2 means recovered
+            nr=np.random.choice(range(1,3),I,p=[1-gamma,gamma])
+            # count the number of newly infected people
+            nin=sum(ni==1)
+            # count the number of newly recovered people
+            nrn=sum(nr==2)
+            # the number of isusceptible people change to the original number minus the number of newly infected people
+            S-=nin
+            # the number of infected people change to the original number plus the number of newly infected people and minus the number of newly recovered people
+            I=I+nin-nrn
+            In.append(I)
+        In_copy=In[:]
+        # set a dictionary to record the infected number for each vaccination
+        dic[i]=In_copy
+    if S<0:
+        for j in range(0,1000):
+            # all the population are vaccination, so, no one can be infected
+            I=0
+            In.append(I)
+            # record the time
+            time.append(j+1)
+        In_copy=In[:]
+        # set a dictionary to record the infected for each vaccination
+        dic[i]=In
         
-        #record
-        for i in si:
-            if i==1:
-                suscept-=1
-                infect+=1
-        for i in ir:
-            if i==1:
-                infect-=1
-                recover+=1
-        time.timepoint(suscept,infect,recover,day)
+        
+        
 
-    #add curve
-    x=[]
-    y=[]
-    for i in range(1001):
-        x.append(i)
-        y.append(time.infect[i])
-    plt.plot(x,y,linewidth=1,label=str(percentage*10)+'%')
-
-#draw figure
-#plt.title('SIR model with different vaccination rates',fontsize=20)
-plt.title('SIR model with different vaccination rates',fontsize=20)
-plt.xlabel('time',fontsize=12)
-plt.ylabel('number of infected people',fontsize=12)
-plt.tick_params(axis='both',labelsize=10)
-plt.legend(loc='upper right')
-plt.savefig(r'D:\figure.png',type='png')
+# make a plot for all the proportion of vaccinatied people
+plt.figure(figsize=(6,4),dpi=150)
+n=1
+# choose color for each curve
+for x in dic:
+    plt.plot(time,dic[x],color=cm.viridis(n),label=str(int(x*100))+'%')
+    n+=25
+plt.title('SIR model with different vaccination rates')
+plt.xlabel('time')
+plt.ylabel('number of people')
+plt.legend()
+plt.savefig('SIR model with different vaccination rates',type='png')

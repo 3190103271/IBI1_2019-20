@@ -1,4 +1,4 @@
-I programmed my SIR model without the help of the guide and the sample file.
-Besides, in my first program, I used class definition which I had never used before. It helped me understand how to define and use a custom class.
-There were also three notable points in spatial SIR model. First, 0.3 was too big for beta, so I reduced it. Secondly, I changed the color of the images in the guide. Finally, I added some legends to figures.
-However, I only managed to draw curves with different shades without drawing curves in gradients like the vaccination figure in practical guide. 
+The task 1 and 2 are relatively easy compared with task 3. In my opinion, I did well in this practical which I think is not so hard. 
+I learnt some new methods to make a plot, which helps to make a better one in future.
+Meanwhile, this practical made me become more familiar with the use of numpy.
+After asking for help from classmates, which I found is really important when encounter difficulties.
