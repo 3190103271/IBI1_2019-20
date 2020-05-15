@@ -10,17 +10,18 @@ import os
 import pandas as pd 
 import matplotlib.pyplot as plt 
 import numpy as np
-
+#import library
 
 os.chdir("D:\IBI\practical\practical\IBI1_2019-20\Practical7") 
 covid_data = pd.read_csv("full_data.csv")
+#get the file
 
 print(covid_data.iloc[:,0:15:3])
 
 my_location=[]
 for n in range (0,7996):
     location=covid_data.loc[n,"location"]
-    my_location.append(location=="Afghanistan")#get the Boolean
+    my_location.append(location=="Afghanistan")#get the Boolean of data
     
 x=covid_data.loc[my_location,"total_cases"]
 
@@ -60,7 +61,7 @@ plt.show()#show the first plot or it will be placed
 sk=[]
 k=[]
 c=[]
-for n in range (0,7996):
+for n in range (0,7996):#get data as before
     location=covid_data.loc[n,"location"]
     sk.append(location=="South Korea")
     k.append(location=="Kenya")

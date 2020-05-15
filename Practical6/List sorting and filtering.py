@@ -6,7 +6,7 @@ Created on Wed Mar 18 09:53:18 2020
 """
 
 gene_lengths=[9410,3944141,4442,105338,19149,76779,126550,36296,842,15981]
-gene_lengths.sort()
+gene_lengths.sort()#sort the list
 
 
 del(gene_lengths[9])
@@ -15,8 +15,9 @@ print(gene_lengths)
 
 
 import matplotlib.pyplot as plt
+#import library
 score = gene_lengths
-plt.boxplot(score,
+plt.boxplot(score,#set parameter
             vert=True,
             whis=1.5,
             patch_artist=True,
@@ -26,5 +27,5 @@ plt.boxplot(score,
             showfliers=True,
             notch=False
             )
-plt.show()
+plt.show()#show the image
 

@@ -11,11 +11,12 @@ file=open(filename,'w')
 ofile=open('Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa')
 nfile=open('mito_gene.fa')
 line=ofile.readline()
+#get to the file and read
 
 count=0
 file.write('$ head -10 rc.fa \n')
 
-def rc(seq):
+def rc(seq):#set function to get the rc
     result=""
     for b in seq[:]:
         if b=="A":
@@ -28,14 +29,14 @@ def rc(seq):
             result=result+"C"
     return result
 
-while True:
+while True:#find the names and length of genes
     mg=nfile.readline()
     name=re.findall(r'Name:(.+)                  L',mg)
     length=re.findall('Length:(.+)\n',mg)
     out='>'+name[0]+'         '+length[0]+'\n'
     file.write(out)
     
-    while True:
+    while True:#write the gene information one by one
             line=ofile.readline()
             if line.startswith('>') or not line:
                 out='\n'
@@ -44,4 +45,4 @@ while True:
             file.write(rc(line))
        
     if not line:
-        break
+        break#break after last line
